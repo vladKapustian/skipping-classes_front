@@ -1,0 +1,19 @@
+.cardHeaderIsLessonNow{}
+
+.card{
+    max-width: 300px;
+    width: 100%;
+    box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.cardIsSelected{
+    border-color: #5096ff
+}
+
+.cardIsNotSelected{}
+
+.cardHeader{}
+
+.cardFooter{}
+
+.cardFooterText{}
