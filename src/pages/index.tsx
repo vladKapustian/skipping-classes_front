@@ -1,9 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { TimetableLessonCard, IDataForTimetableLessonCard } from "@/components/TimetableLessonCard";
 import { IDataForStudentCard, LessonStudentCard } from "@/components/LessonStudentCard";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -64,17 +65,40 @@ export default function Home() {
       allDisciplinesMissedTotal: 20,
     },
   ];
+  function missedClassFunction<T>(data: T, delay: number): Promise<T> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+      }, delay);
+    });
+  }
+
+  function reasonedMissedClassFucntion<T>(data: T, delay: number): Promise<T> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+      }, delay);
+    });
+  }
   const timetable = timeTableCardsData.map((lessonData) => (
     <TimetableLessonCard key={lessonData.id} dataForCard={lessonData} />
   ));
 
   const students = dataForStudentCard.map((studentData) => (
-    <LessonStudentCard key={studentData.id} dataForCard={studentData}></LessonStudentCard>
+    <LessonStudentCard
+      missedClassFunction={missedClassFunction}
+      reasonedMissedClassFucntion={reasonedMissedClassFucntion}
+      key={studentData.id}
+      dataForCard={studentData}
+    ></LessonStudentCard>
   ));
   return (
-    <>
-      <div className={styles.cardLayout}>{timetable}</div>
-      <div className={styles.cardLayout}>{students}</div>
-    </>
+    <div className={styles.layout}>
+      <Navbar />
+      <div className={styles.container}>
+        <div className={styles.cardLayout}>{timetable}</div>
+        <div className={styles.cardLayout}>{students}</div>
+      </div>
+    </div>
   );
 }

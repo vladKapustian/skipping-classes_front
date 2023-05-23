@@ -34,14 +34,14 @@ export const TimetableLessonCard = ({ dataForCard }: { dataForCard: IDataForTime
     return;
   };
   return (
-    <Link href={`/lessons/${dataForCard.id}`}>
+    <Link className={styles.container} href={`/lessons/${dataForCard.id}`}>
       <Card
         className={`${styles.card}`}
         title={<h3 className={styles.cardHeader}>{timestamps}</h3>}
         extra={isCurrentLessonBadge()}
       >
-        <p>{dataForCard.lessonName}</p>
-        <Divider></Divider>
+        <p className={styles.lessonName}> {dataForCard.lessonName}</p>
+        <Divider className={styles.cardDivider}></Divider>
         <p>{dataForCard.teacherName}</p>
         <div className={styles.cardFooter}>
           <p className={styles.cardFooterText}>{dataForCard.classroomNumber}</p>

@@ -15,7 +15,15 @@ export interface IDataForStudentCard {
   allDisciplinesMissedTotal: number;
 }
 
-export const LessonStudentCard = ({ dataForCard }: { dataForCard: IDataForStudentCard }) => {
+export const LessonStudentCard = ({
+  dataForCard,
+  missedClassFunction,
+  reasonedMissedClassFucntion,
+}: {
+  dataForCard: IDataForStudentCard;
+  missedClassFunction: <T>(data: T, delay: number) => Promise<T>;
+  reasonedMissedClassFucntion: <T>(data: T, delay: number) => Promise<T>;
+}) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const selectClickHandler = () => {
     setIsSelected(!isSelected);
@@ -35,13 +43,19 @@ export const LessonStudentCard = ({ dataForCard }: { dataForCard: IDataForStuden
     >
       <p>Пропущено всего: {dataForCard.missedTotal}</p>
       <p>Пропущено по уважительной причине: {dataForCard.reasonedMissedTotal}</p>
-      <Collapse accordion ghost className={styles.cardFooter}>
+      <Collapse className={styles.cardFooter}>
         <Panel key={1} header={panelHeader}>
           <p className={styles.cardFooterText}>Процент посещения{dataForCard.attendanceRatePecentage}</p>
           <p className={styles.cardFooterText}>
             Процент посещения по всем предметам: {dataForCard.allDisciplinesAttendanceRate}
           </p>
           <p className={styles.cardFooterText}>Пропусокв по всем предметам: {dataForCard.allDisciplinesMissedTotal}</p>
+          <button className={styles.markMissedClass} onClick={() => missedClassFunction(dataForCard.id, 1000)}>
+            Отметить пропуск
+          </button>
+          <button className={styles.markMissedUnreasonedClass} onClick={() => reasonedMissedClassFucntion}>
+            По уважительной причине
+          </button>
         </Panel>
       </Collapse>
     </Card>
