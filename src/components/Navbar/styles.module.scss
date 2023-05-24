@@ -3,6 +3,11 @@
     width: 100%;
     background-color: white;
 }
+.flex{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
 .navbarContainer{
     height: 60px;
@@ -25,4 +30,9 @@
     border-radius: 45%;
     width: 45px;
     height: 45px;
+}
+
+.toMain{
+    margin: 0 12px;
+    font-size: 24px;
 }

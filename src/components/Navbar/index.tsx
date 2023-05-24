@@ -15,7 +15,10 @@ const Navbar = () => {
   return (
     <div className={style.navbar}>
       <div className={style.navbarContainer}>
-        <Image onClick={router.back} alt="" src={vector}></Image>
+        <Link href={"/"} className={style.flex}>
+          <Image alt="" src={vector}></Image>
+          <p className={style.toMain}>На главную</p>
+        </Link>
 
         <Image className={style.avatar} src={starryNight} alt={""} />
       </div>

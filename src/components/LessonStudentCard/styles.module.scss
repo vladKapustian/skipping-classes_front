@@ -1,4 +1,9 @@
-.cardHeaderIsLessonNow{}
+.panelHeader{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 120%;  
+    color: #5096FF;
+}
 
 .card{
     max-width: 300px;
@@ -7,7 +12,9 @@
 }
 
 .cardIsSelected{
-    border-color: #5096ff
+    border-color: #5096ff;
+    border-width: 1px;
+    
 }
 
 .cardIsNotSelected{}
@@ -16,4 +23,9 @@
 
 .cardFooter{}
 
-.cardFooterText{}
+.cardFooterText{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 120%;
+    color: #000000;
+}
