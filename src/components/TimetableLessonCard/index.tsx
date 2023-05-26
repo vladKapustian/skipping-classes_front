@@ -11,6 +11,7 @@ export interface IDataForTimetableLessonCard {
   teacherName: string;
   classroomNumber: number | string | undefined; // TODO: добавляем номер аудитории в бд и в карточку
   lessonType: "Лекция" | "Практика" | undefined;
+  lessonDate: string;
 }
 
 export const TimetableLessonCard = ({ dataForCard }: { dataForCard: IDataForTimetableLessonCard }) => {

@@ -15,13 +15,13 @@ const LessonNavbar = () => {
     <div className={style.navbar}>
       <div className={style.navbarContainer}>
         <div className={style.leftSideNavbar}>
-          <Image onClick={router.back} alt="" src={vector}></Image>
+          <Image className={style.toMain} onClick={router.back} alt="" src={vector}></Image>
           <p>
             {daysOfTheWeek[day]}, {date.getDate()} Мая
           </p>
           <p>{router.query.lessonName}</p>
         </div>
-        <Avatar size={45} icon={<Image src={starryNight} alt={""} />} />
+        <Avatar className={style.avatar} size={45} icon={<Image src={starryNight} alt={""} />} />
       </div>
     </div>
   );

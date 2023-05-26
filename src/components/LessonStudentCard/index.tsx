@@ -21,7 +21,7 @@ export const LessonStudentCard = ({
   reasonedMissedClassFucntion,
 }: {
   dataForCard: IDataForStudentCard;
-  missedClassFunction: <T>(data: T, delay: number) => Promise<T>;
+  missedClassFunction: (id: number) => void;
   reasonedMissedClassFucntion: <T>(data: T, delay: number) => Promise<T>;
 }) => {
   const collapseStyle = {
@@ -33,10 +33,13 @@ export const LessonStudentCard = ({
     marginBottom: 24,
     border: "none",
   };
-  const [isSelected, setIsSelected] = useState<boolean>(false);
-  const selectClickHandler = () => {
-    setIsSelected(!isSelected);
+  const [selected, setSelected] = useState(false);
+
+  const handleOnClick = () => {
+    setSelected(!selected);
+    missedClassFunction(dataForCard.id);
   };
+
   enum EBadgeColor {
     blue = "blue",
     green = "greeen",
@@ -52,14 +55,15 @@ export const LessonStudentCard = ({
   }, [isMorepanelOpen]);
   return (
     <Card
-      className={`${isSelected ? styles.cardIsSelected : styles.cardIsNotSelected}${styles.card}`}
+      className={`${selected ? styles.cardIsSelected : styles.cardIsNotSelected}${styles.card}`}
+      bordered={selected}
       title={
-        <div>
+        <div className={styles.cardHeader}>
           <h3 className={styles.cardHeader}>{dataForCard.name}</h3>
           <Badge color={badgeColor} />
         </div>
       }
-      onClick={selectClickHandler}
+      onClick={handleOnClick}
     >
       <p>
         Пропущено всего: <strong>{dataForCard.missedTotal}</strong>
@@ -68,7 +72,7 @@ export const LessonStudentCard = ({
         Пропущено по уважительной причине: <strong>{dataForCard.reasonedMissedTotal}</strong>
       </p>
       <Collapse style={collapseStyle} ghost className={styles.cardFooter}>
-        <Panel extra={badge()} style={panelStyle} key={1} header={<p className={styles.panelHeader}>{panelHeader}</p>}>
+        <Panel style={panelStyle} key={1} header={<p className={styles.panelHeader}>{panelHeader}</p>}>
           <p className={styles.cardFooterText}>
             Процент посещения: <strong>{dataForCard.attendanceRatePecentage}</strong>
           </p>
@@ -78,7 +82,7 @@ export const LessonStudentCard = ({
           <p className={styles.cardFooterText}>
             Пропусокв по всем предметам: <strong>{dataForCard.allDisciplinesMissedTotal}</strong>
           </p>
-          <button className={styles.markMissedClass} onClick={() => missedClassFunction(dataForCard.id, 1000)}>
+          <button className={styles.markMissedClass} onClick={() => missedClassFunction(dataForCard.id)}>
             Отметить пропуск
           </button>
           <button className={styles.markMissedUnreasonedClass} onClick={() => reasonedMissedClassFucntion}>

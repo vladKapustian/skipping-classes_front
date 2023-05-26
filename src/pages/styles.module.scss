@@ -8,4 +8,49 @@
   max-width: 1440px;
   width: 100%;
   margin: 0 auto;
+  position:static;
+  overflow-x: auto;
+  white-space: nowrap;
+  z-index: 2  ;
+}
+
+.timetable{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow-x: scroll;
+  overflow-x: auto;
+  white-space: nowrap;
+  z-index: 4;
+
+}
+
+.timetableDay{
+  margin: 20px;
+}
+
+.timetableDayTitle{
+  font-style: normal;
+  font-weight: 600;
+font-size: 22px;
+line-height: 24px;
+
+color: #000000;
+}
+
+.navigation{
+  margin: 20px;
+}
+
+.datePicker{
+  max-width: 280px;
+  width: 100%;
+  height: 30px;
+}
+
+.select{
+  margin: 0 8px;
+  max-width: 280px;
+  width: 100%;
+  height: 40px;
 }
