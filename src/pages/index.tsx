@@ -8,17 +8,26 @@ import Navbar from "@/components/Navbar";
 
 import { DatePicker, DatePickerProps, Select } from "antd";
 import locale from "@/utils/useCalendarLocale";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useFetchTimetableData from "@/utils/grops/useFetchTimetableData";
 import { useRouter } from "next/router";
 import { AxiosResponse } from "axios";
 import { ITimetableResponse } from "@/types";
 
-export default function Home() {
-  const router = useRouter();
+const daysName = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
 
+const selectWeek = (date: Date) => {
+  return Array(7)
+    .fill(new Date(date))
+    .map((el, idx) => new Date(el.setDate(el.getDate() - el.getDay() + idx)));
+};
+
+export default function Home() {
   const [isPending, setIsPending] = useState(false);
   const [timetableCardsData, setTimetableCardsData] = useState<ITimetableResponse | []>([]);
+  const [group, setGroup] = useState("PI-311");
+  const router = useRouter();
+
   const getStudentsCard = async () => {
     setIsPending(true);
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -27,15 +36,9 @@ export default function Home() {
     setIsPending(false);
   };
 
-  getStudentsCard();
-
-  const daysName = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-
-  function selectWeek(date: Date) {
-    return Array(7)
-      .fill(new Date(date))
-      .map((el, idx) => new Date(el.setDate(el.getDate() - el.getDay() + idx)));
-  }
+  useEffect(() => {
+    getStudentsCard();
+  }, []);
 
   const date = new Date();
   selectWeek(date);
@@ -89,7 +92,6 @@ export default function Home() {
     console.log(date, dateString);
   };
 
-  const [group, setGroup] = useState("PI-311");
   const selectOptions = [
     { label: "ПИ-311", value: "PI-311" },
     { label: "ПРИ-311", value: "PRI-311" },
