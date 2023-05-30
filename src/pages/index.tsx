@@ -2,52 +2,75 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "./styles.module.scss";
-import { TimetableLessonCard, IDataForTimetableLessonCard } from "@/components/TimetableLessonCard";
+import { TimetableLessonCard } from "@/components/TimetableLessonCard";
 import { IDataForStudentCard, LessonStudentCard } from "@/components/LessonStudentCard";
 import Navbar from "@/components/Navbar";
 
 import { DatePicker, DatePickerProps, Select } from "antd";
 import locale from "@/utils/useCalendarLocale";
 import { useState } from "react";
+import useFetchTimetableData from "@/utils/grops/useFetchTimetableData";
+import { useRouter } from "next/router";
+import { AxiosResponse } from "axios";
+import { ITimetableResponse } from "@/types";
 
 export default function Home() {
-  const days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+  const router = useRouter();
 
-  const mondayTimetableData: IDataForTimetableLessonCard[] = [];
-  const tuesdayTimetableData: IDataForTimetableLessonCard[] = [];
-  const wednesdayTimetableData: IDataForTimetableLessonCard[] = [];
-  const thursdayTimetableData: IDataForTimetableLessonCard[] = [];
-  const fridayTimetableData: IDataForTimetableLessonCard[] = [];
-  const saturdayTimetableData: IDataForTimetableLessonCard[] = [];
+  const [isPending, setIsPending] = useState(false);
+  const [timetableCardsData, setTimetableCardsData] = useState<ITimetableResponse | []>([]);
+  const getStudentsCard = async () => {
+    setIsPending(true);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const _data = await useFetchTimetableData(router.query.id as string);
+    setTimetableCardsData(_data.data);
+    setIsPending(false);
+  };
 
-  for (let i = 0; i < days.length; i++) {
-    timeTableCardsData.forEach((cardData) => {
-      if (cardData.lessonDate === days[i]) {
-        switch (days[i]) {
-          case "Понедельник":
-            mondayTimetableData.push(cardData);
-            break;
-          case "Вторник":
-            tuesdayTimetableData.push(cardData);
-            break;
-          case "Среда":
-            wednesdayTimetableData.push(cardData);
-            break;
-          case "Четверг":
-            thursdayTimetableData.push(cardData);
-            break;
-          case "Пятница":
-            fridayTimetableData.push(cardData);
-            break;
-          case "Суббота":
-            saturdayTimetableData.push(cardData);
-            break;
-          default:
-            break;
-        }
-      }
-    });
+  getStudentsCard();
+
+  const daysName = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+
+  function selectWeek(date: Date) {
+    return Array(7)
+      .fill(new Date(date))
+      .map((el, idx) => new Date(el.setDate(el.getDate() - el.getDay() + idx)));
   }
+
+  const date = new Date();
+  selectWeek(date);
+
+  const mondayTimetableData: ITimetableResponse = [];
+  const tuesdayTimetableData: ITimetableResponse = [];
+  const wednesdayTimetableData: ITimetableResponse = [];
+  const thursdayTimetableData: ITimetableResponse = [];
+  const fridayTimetableData: ITimetableResponse = [];
+  const saturdayTimetableData: ITimetableResponse = [];
+
+  timetableCardsData.forEach((cardData) => {
+    switch (cardData.time.getDate()) {
+      case 1:
+        mondayTimetableData.push(cardData);
+        break;
+      case 2:
+        tuesdayTimetableData.push(cardData);
+        break;
+      case 3:
+        wednesdayTimetableData.push(cardData);
+        break;
+      case 4:
+        thursdayTimetableData.push(cardData);
+        break;
+      case 5:
+        fridayTimetableData.push(cardData);
+        break;
+      case 6:
+        saturdayTimetableData.push(cardData);
+        break;
+      default:
+        break;
+    }
+  });
 
   const mondayTimetable = mondayTimetableData.map((item) => <TimetableLessonCard key={item.id} dataForCard={item} />);
   const tuesdayTimetable = tuesdayTimetableData.map((item) => <TimetableLessonCard key={item.id} dataForCard={item} />);
