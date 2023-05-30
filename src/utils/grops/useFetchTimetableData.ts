@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import api from "../axios";
 import { ITimetableResponse } from "@/types";
 
-const useFetchTimetableData =async (groupId:string, startTime: Date, endTime:Date):Promise<AxiosResponse<ITimetableResponse>> => {
+export const useFetchTimetableData =async (groupId:string, startTime: Date, endTime:Date):Promise<AxiosResponse<ITimetableResponse>> => {
     const _data = await api.get(`lessons/${groupId}`,{params:{
         filters: {
             startTime: startTime,

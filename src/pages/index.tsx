@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styles from "./styles.module.scss";
 import { TimetableLessonCard } from "@/components/TimetableLessonCard";
 import { IDataForStudentCard, LessonStudentCard } from "@/components/LessonStudentCard";
@@ -6,7 +7,7 @@ import Navbar from "@/components/Navbar";
 import { DatePicker, DatePickerProps, Select } from "antd";
 import locale from "@/utils/useCalendarLocale";
 import { ReactNode, useEffect, useState } from "react";
-import useFetchTimetableData from "@/utils/grops/useFetchTimetableData";
+import { useFetchTimetableData } from "@/utils/grops/useFetchTimetableData";
 import { useRouter } from "next/router";
 import { AxiosResponse } from "axios";
 import { ITimetableResponse } from "@/types";

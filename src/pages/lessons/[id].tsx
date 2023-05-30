@@ -3,7 +3,7 @@ import { LessonStudentCard } from "@/components/LessonStudentCard";
 import styles from "./styles.module.css";
 import { Button, Select } from "antd";
 import { useState } from "react";
-import useFetchTimetableData from "@/utils/grops/useFetchTimetableData";
+import { useFetchTimetableData } from "@/utils/grops/useFetchTimetableData";
 import { useRouter } from "next/router";
 
 export default function LessonPage() {
