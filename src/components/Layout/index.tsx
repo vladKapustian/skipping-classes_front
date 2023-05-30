@@ -18,6 +18,8 @@ const Layout = ({ children }: Props) => {
     if (!cookies.token) router.replace("/auth/sign-in");
   }, [cookies.token]);
 
+  if (router.pathname.includes("/auth")) return <div className={styles.layout}>{children}</div>;
+
   return (
     <div className={styles.layout}>
       <Navbar />
