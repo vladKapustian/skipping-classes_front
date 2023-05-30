@@ -1,66 +1,63 @@
-.cardHeaderIsLessonNow{
-    width: 10px;
+.cardHeaderIsLessonNow {
+  width: 10px;
 }
 
-
-.card{
-    max-width: 300px;
-    width: 100%;
-    min-width: 280px;
-    box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
-    margin: 8px 0;
+.card {
+  max-width: 300px;
+  width: 100%;
+  min-width: 280px;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
+  margin: 8px 0;
 }
 
-.cardHeader{
-    max-height: 24px;
-    height: 100%;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 24px;
-    color: #282828;
-    margin: 0;
-    padding: 0;
+.cardHeader {
+  max-height: 24px;
+  height: 100%;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: #282828;
+  margin: 0;
+  padding: 0;
 }
 
-.cardDivider{
-    margin: 8px 0;
-    padding: 0;
+.cardDivider {
+  margin: 8px 0;
+  padding: 0;
 }
-.cardIsSelected{
-    border-color: #5096ff
-}
-
-.lessonName{
-    max-width: 368px;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #212121;
-
+.cardIsSelected {
+  border-color: #5096ff;
 }
 
-
-.teacherName{
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 24px;
-    color: #000000;
+.lessonName {
+  max-width: 368px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #212121;
 }
 
-.cardFooter{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+.teacherName {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #000000;
 }
 
-.cardFooterText{
-    font-weight: 400;
-font-size: 14px;
-line-height: 24px;
-color: #787878;
+.cardFooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.toMain{
-    color:#000000;
+.cardFooterText {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #787878;
+}
+
+.toMain {
+  color: #000000;
 }

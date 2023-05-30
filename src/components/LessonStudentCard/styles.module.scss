@@ -1,40 +1,39 @@
-.panelHeader{
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 120%;  
-    color: #5096FF;
+.panelHeader {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: #5096ff;
 }
 
-.card{
-    max-width: 300px;
-    width: 100%;
-    box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
-    border: black;
+.card {
+  max-width: 300px;
+  width: 100%;
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.05);
+  border: black;
 }
 
-.cardIsSelected{
-    border-color: #5096ff;
-    border-width: 4px;
-    border: solid;
-    
+.cardIsSelected {
+  border-color: #5096ff;
+  border-width: 4px;
+  border: solid;
 }
 
-.cardIsNotSelected{
-    background-color: #000000;
+.cardIsNotSelected {
+  background-color: #000000;
 }
 
-.cardHeader{
-    display: flex;
-    flex-direction: row
-    ;justify-content: space-between;
-    
+.cardHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.cardFooter{}
+.cardFooter {
+}
 
-.cardFooterText{
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 120%;
-    color: #000000;
+.cardFooterText {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 120%;
+  color: #000000;
 }

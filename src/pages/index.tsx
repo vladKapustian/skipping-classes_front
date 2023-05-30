@@ -1,6 +1,3 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import styles from "./styles.module.scss";
 import { TimetableLessonCard } from "@/components/TimetableLessonCard";
 import { IDataForStudentCard, LessonStudentCard } from "@/components/LessonStudentCard";
@@ -16,12 +13,6 @@ import { ITimetableResponse } from "@/types";
 
 const daysName = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
 
-const selectWeek = (date: Date) => {
-  return Array(7)
-    .fill(new Date(date))
-    .map((el, idx) => new Date(el.setDate(el.getDate() - el.getDay() + idx)));
-};
-
 export default function Home() {
   const [isPending, setIsPending] = useState(false);
   const [timetableCardsData, setTimetableCardsData] = useState<ITimetableResponse | []>([]);
@@ -36,9 +27,11 @@ export default function Home() {
     setIsPending(false);
   };
 
-  useEffect(() => {
-    getStudentsCard();
-  }, []);
+  function selectWeek(date: Date) {
+    return Array(7)
+      .fill(new Date(date))
+      .map((el, idx) => new Date(el.setDate(el.getDate() - el.getDay() + idx)));
+  }
 
   const date = new Date();
   selectWeek(date);
@@ -102,45 +95,46 @@ export default function Home() {
     setGroup(selecedValue);
   };
 
+  useEffect(() => {
+    getStudentsCard();
+  }, []);
+
   return (
-    <div className={styles.layout}>
-      <Navbar />
-      <div className={styles.container}>
-        <nav className={styles.navigation}>
-          <DatePicker locale={locale} className={styles.datePicker} onChange={onChange} picker="week" />
-          <Select
-            onChange={handleSelectChange}
-            style={{ height: 40 }}
-            defaultValue={"Выберите группу"}
-            className={styles.select}
-            options={selectOptions}
-          />
-        </nav>
-        <div className={styles.timetable}>
-          <div className={styles.timetableDay}>
-            <h2 className={styles.timetableDayTitle}>Понедельник</h2>
-            <div className={styles.timeTableDayColumn}>{mondayTimetable}</div>
-          </div>
-          <div className={styles.timetableDay}>
-            <h2 className={styles.timetableDayTitle}>Вторник</h2>
-            <div className={styles.timeTableDayColumn}>{tuesdayTimetable}</div>
-          </div>
-          <div className={styles.timetableDay}>
-            <h2 className={styles.timetableDayTitle}>Среда</h2>
-            <div className={styles.timeTableDayColumn}>{wednesdayTimetable}</div>
-          </div>
-          <div className={styles.timetableDay}>
-            <h2 className={styles.timetableDayTitle}>Четверг</h2>
-            <div className={styles.timeTableDayColumn}>{thursdayTimetable}</div>
-          </div>
-          <div className={styles.timetableDay}>
-            <h2 className={styles.timetableDayTitle}>Пятница</h2>
-            <div className={styles.timeTableDayColumn}>{fridayTimetable}</div>
-          </div>
-          <div className={styles.timetableDay}>
-            <h2 className={styles.timetableDayTitle}>Суббота</h2>
-            <div className={styles.timeTableDayColumn}>{saturdayTimetable}</div>
-          </div>
+    <div className={styles.container}>
+      <nav className={styles.navigation}>
+        <DatePicker locale={locale} className={styles.datePicker} onChange={onChange} picker="week" />
+        <Select
+          onChange={handleSelectChange}
+          style={{ height: 40 }}
+          defaultValue={"Выберите группу"}
+          className={styles.select}
+          options={selectOptions}
+        />
+      </nav>
+      <div className={styles.timetable}>
+        <div className={styles.timetableDay}>
+          <h2 className={styles.timetableDayTitle}>Понедельник</h2>
+          <div className={styles.timeTableDayColumn}>{mondayTimetable}</div>
+        </div>
+        <div className={styles.timetableDay}>
+          <h2 className={styles.timetableDayTitle}>Вторник</h2>
+          <div className={styles.timeTableDayColumn}>{tuesdayTimetable}</div>
+        </div>
+        <div className={styles.timetableDay}>
+          <h2 className={styles.timetableDayTitle}>Среда</h2>
+          <div className={styles.timeTableDayColumn}>{wednesdayTimetable}</div>
+        </div>
+        <div className={styles.timetableDay}>
+          <h2 className={styles.timetableDayTitle}>Четверг</h2>
+          <div className={styles.timeTableDayColumn}>{thursdayTimetable}</div>
+        </div>
+        <div className={styles.timetableDay}>
+          <h2 className={styles.timetableDayTitle}>Пятница</h2>
+          <div className={styles.timeTableDayColumn}>{fridayTimetable}</div>
+        </div>
+        <div className={styles.timetableDay}>
+          <h2 className={styles.timetableDayTitle}>Суббота</h2>
+          <div className={styles.timeTableDayColumn}>{saturdayTimetable}</div>
         </div>
       </div>
     </div>
