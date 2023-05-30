@@ -5,19 +5,13 @@ import styles from "./styles.module.scss";
 import { TimetableLessonCard, IDataForTimetableLessonCard } from "@/components/TimetableLessonCard";
 import { IDataForStudentCard, LessonStudentCard } from "@/components/LessonStudentCard";
 import Navbar from "@/components/Navbar";
-import { timeTableCardsData } from "@/utils/useTimetableData";
+
 import { DatePicker, DatePickerProps, Select } from "antd";
 import locale from "@/utils/useCalendarLocale";
 import { useState } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export default function Home() {
   const days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
-
-  const timetable = timeTableCardsData.map((lessonData) => (
-    <TimetableLessonCard key={lessonData.id} dataForCard={lessonData} />
-  ));
 
   const mondayTimetableData: IDataForTimetableLessonCard[] = [];
   const tuesdayTimetableData: IDataForTimetableLessonCard[] = [];

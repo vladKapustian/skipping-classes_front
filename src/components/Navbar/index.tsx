@@ -1,4 +1,3 @@
-import Avatar from "antd/es/avatar/avatar";
 import style from "./styles.module.scss";
 import Link from "next/link";
 import vector from "../../../public/Vector.svg";

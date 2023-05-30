@@ -5,13 +5,20 @@ import styles from "./styles.module.css";
 import { Button, Select } from "antd";
 import { useState } from "react";
 
-export default function Lesson() {
+export default function LessonPage() {
   const [itemsSelectedIds, setItemsSelectedIds] = useState<number[]>([]);
-  const useItemsSelectedIds = (id: number) => {
-    if (itemsSelectedIds.indexOf(id) !== -1) {
-      setItemsSelectedIds(itemsSelectedIds.splice(itemsSelectedIds.indexOf(id), 2));
+  const toggleCardSelect = (id: number) => {
+    const itemIndex = itemsSelectedIds.indexOf(id);
+    if (itemIndex !== -1) {
+      setItemsSelectedIds((prev) => {
+        const newItems = [...prev];
+        newItems.splice(itemIndex, 1);
+        console.log(newItems);
+
+        return newItems;
+      });
     } else {
-      itemsSelectedIds.push(id);
+      setItemsSelectedIds((prev) => [...prev, id]);
     }
   };
 
@@ -33,10 +40,11 @@ export default function Lesson() {
 
   const students = dataForStudentCard.map((studentData) => (
     <LessonStudentCard
-      missedClassFunction={useItemsSelectedIds}
+      missedClassFunction={toggleCardSelect}
       reasonedMissedClassFucntion={reasonedMissedClassFucntion}
       key={studentData.id}
       dataForCard={studentData}
+      selected={itemsSelectedIds.includes(studentData.id)}
     ></LessonStudentCard>
   ));
 

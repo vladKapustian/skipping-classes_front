@@ -2,26 +2,29 @@ import { Card, Badge, Divider, Collapse } from "antd";
 
 import styles from "./styles.module.scss";
 import { useEffect, useState } from "react";
+import { EUserRole } from "@/types";
 
 const { Panel } = Collapse;
 
 export interface IDataForStudentCard {
   id: number;
-  name: string;
-  missedTotal: string | number;
-  reasonedMissedTotal: string | number;
-  attendanceRatePecentage: number;
-  allDisciplinesAttendanceRate: number;
-  allDisciplinesMissedTotal: number;
+  firstname: string;
+  middlename: string;
+  lastname: string;
+  role: EUserRole;
+  email: string;
+  groupId: number | null;
 }
 
 export const LessonStudentCard = ({
   dataForCard,
   missedClassFunction,
   reasonedMissedClassFucntion,
+  selected,
 }: {
   dataForCard: IDataForStudentCard;
   missedClassFunction: (id: number) => void;
+  selected: boolean;
   reasonedMissedClassFucntion: <T>(data: T, delay: number) => Promise<T>;
 }) => {
   const collapseStyle = {
@@ -32,12 +35,6 @@ export const LessonStudentCard = ({
   const panelStyle = {
     marginBottom: 24,
     border: "none",
-  };
-  const [selected, setSelected] = useState(false);
-
-  const handleOnClick = () => {
-    setSelected(!selected);
-    missedClassFunction(dataForCard.id);
   };
 
   enum EBadgeColor {
@@ -59,29 +56,14 @@ export const LessonStudentCard = ({
       bordered={selected}
       title={
         <div className={styles.cardHeader}>
-          <h3 className={styles.cardHeader}>{dataForCard.name}</h3>
+          <h3 className={styles.cardHeader}>{`${dataForCard.lastname} ${dataForCard.firstname}`}</h3>
           <Badge color={badgeColor} />
         </div>
       }
-      onClick={handleOnClick}
     >
-      <p>
-        Пропущено всего: <strong>{dataForCard.missedTotal}</strong>
-      </p>
-      <p>
-        Пропущено по уважительной причине: <strong>{dataForCard.reasonedMissedTotal}</strong>
-      </p>
+      <p>Адрес электронной почты: {dataForCard.email}</p>
       <Collapse style={collapseStyle} ghost className={styles.cardFooter}>
         <Panel style={panelStyle} key={1} header={<p className={styles.panelHeader}>{panelHeader}</p>}>
-          <p className={styles.cardFooterText}>
-            Процент посещения: <strong>{dataForCard.attendanceRatePecentage}</strong>
-          </p>
-          <p className={styles.cardFooterText}>
-            Процент посещения по всем предметам: <strong>{dataForCard.allDisciplinesAttendanceRate}</strong>
-          </p>
-          <p className={styles.cardFooterText}>
-            Пропусокв по всем предметам: <strong>{dataForCard.allDisciplinesMissedTotal}</strong>
-          </p>
           <button className={styles.markMissedClass} onClick={() => missedClassFunction(dataForCard.id)}>
             Отметить пропуск
           </button>
