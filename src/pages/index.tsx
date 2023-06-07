@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styles from "./styles.module.scss";
 import { TimetableLessonCard } from "@/components/TimetableLessonCard";
-import { IDataForStudentCard, LessonStudentCard } from "@/components/LessonStudentCard";
 import Navbar from "@/components/Navbar";
 
 import { DatePicker, DatePickerProps, Select } from "antd";
 import locale from "@/utils/useCalendarLocale";
 import { ReactNode, useEffect, useState } from "react";
-import { useFetchTimetableData } from "@/utils/grops/useFetchTimetableData";
 import { useRouter } from "next/router";
 import { AxiosResponse } from "axios";
-import { ITimetableResponse } from "@/types";
+import { IGroupsData, IGroupsSelectPreparedData, ITimetableResponse } from "@/types";
+import { fetchGroupsData } from "@/utils/grops/fetchGroupsList";
+import { FetchTimetableData } from "@/utils/grops/fetchTimetableData";
 
 const daysName = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
 
@@ -20,25 +20,35 @@ const selectWeek = (date: Date) => {
     .map((el, idx) => new Date(el.setDate(el.getDate() - el.getDay() + idx)));
 };
 
-const selectOptions = [
-  { label: "ПИ-311", value: "PI-311" },
-  { label: "ПРИ-311", value: "PRI-311" },
-  { label: "ИСТ-311", value: "ИСТ-311" },
-];
-
 export default function Home() {
   const [isPending, setIsPending] = useState(false);
   const [timetableCardsData, setTimetableCardsData] = useState<ITimetableResponse | []>([]);
-  const [group, setGroup] = useState("PI-311");
+  const [groups, setGroups] = useState<IGroupsSelectPreparedData[] | undefined>(undefined);
+  const [selectedGroup, setSelctedGroup] = useState<IGroupsSelectPreparedData | undefined>(undefined);
   const router = useRouter();
+
+  useEffect(() => {
+    fetchGroupsData().then((groups: AxiosResponse<IGroupsData[]> | undefined) => {
+      if (groups !== undefined) {
+        const preparedDataForGropsSelect: IGroupsSelectPreparedData[] = groups.data?.map((group: IGroupsData) => ({
+          id: group.id,
+          label: group.name,
+          value: group.name,
+        }));
+        setGroups(preparedDataForGropsSelect);
+        console.log(preparedDataForGropsSelect);
+      }
+    });
+  }, []);
 
   const date = new Date();
   const currentWeekDates = selectWeek(date);
 
-  const getStudentsCard = async () => {
+  const getTimetableCard = async () => {
     setIsPending(true);
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const _data = await useFetchTimetableData(router.query.id as string, currentWeekDates[0], currentWeekDates[6]);
+    const _data = await FetchTimetableData(router.query.id as string, currentWeekDates[0], currentWeekDates[6]);
+    if (_data === null) return;
     setTimetableCardsData(_data.data);
     setIsPending(false);
   };
@@ -57,11 +67,7 @@ export default function Home() {
   let fridayTimetable: ReactNode[] = [];
   let saturdayTimetable: ReactNode[] = [];
 
-  useEffect(() => {
-    getStudentsCard();
-  }, []);
-
-  useEffect(() => {
+  const prepareDataForTable = () => {
     timetableCardsData.map((cardData) => {
       switch (cardData.time.getDate()) {
         case 1:
@@ -93,30 +99,32 @@ export default function Home() {
     thursdayTimetable = thursdayTimetableData.map((item) => <TimetableLessonCard key={item.id} dataForCard={item} />);
     fridayTimetable = fridayTimetableData.map((item) => <TimetableLessonCard key={item.id} dataForCard={item} />);
     saturdayTimetable = saturdayTimetableData.map((item) => <TimetableLessonCard key={item.id} dataForCard={item} />);
-  }, [timetableCardsData]);
+  };
+
+  useEffect(() => {
+    getTimetableCard().then(() => {
+      prepareDataForTable();
+    });
+  }, [groups]);
 
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
   };
 
-  const handleSelectChange = (selecedValue: string) => {
-    setGroup(selecedValue);
-  };
-
-  useEffect(() => {
-    getStudentsCard();
-  }, []);
+  // const handleGroup = (selecedValue: string) => {
+  //   setSelctedGroup(groups[selecedValue]);
+  // };
 
   return (
     <div className={styles.container}>
       <nav className={styles.navigation}>
         <DatePicker locale={locale} className={styles.datePicker} onChange={onChange} picker="week" />
         <Select
-          onChange={handleSelectChange}
+          // onChange={handleGroup}
           style={{ height: 40 }}
           defaultValue={"Выберите группу"}
           className={styles.select}
-          options={selectOptions}
+          options={groups}
         />
       </nav>
       <div className={styles.timetable}>

@@ -12,3 +12,14 @@ export interface ITimetableData {
 }
 
 export interface ITimetableResponse extends Array<ITimetableData> {}
+
+export interface IGroupsData {
+  id: number
+  name: string
+}
+
+export interface IGroupsSelectPreparedData{
+  id: number
+  label: string
+  value:string
+}

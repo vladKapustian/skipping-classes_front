@@ -10,13 +10,13 @@ type Props = {
 };
 
 const Layout = ({ children }: Props) => {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const [cookies] = useCookies(["token"]);
+  // const [cookies] = useCookies(["token"]);
 
-  useEffect(() => {
-    if (!cookies.token) router.replace("/auth/sign-in");
-  }, [cookies.token]);
+  // useEffect(() => {
+  //   if (!cookies.token) router.replace("/auth/sign-in");
+  // }, [cookies.token]);
 
   return (
     <div className={styles.layout}>
